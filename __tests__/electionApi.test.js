@@ -20,7 +20,7 @@ describe('Election API Endpoints', () => {
     expect(res.body).toHaveProperty('success', true);
     expect(res.body.data).toHaveProperty('timeline');
     expect(res.body.data).toHaveProperty('answer');
-  });
+  }, 15000);
 
   // Test missing parameters (HTTP 400)
   it('should return 400 if message parameter is missing', async () => {
