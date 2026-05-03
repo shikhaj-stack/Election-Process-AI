@@ -2,103 +2,250 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VoteSmart Hub 🗳️</title>
     <meta name="description" content="VoteSmart Hub - Your interactive assistant for understanding the election process, timelines, and steps.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
                     colors: {
-                        deepNavy: '#0A192F',
-                        emeraldSuccess: '#10B981',
-                        crispWhite: '#F8FAFC',
-                        goldHighlight: '#F59E0B'
+                        primaryBg: '#0B0F19',
+                        cardBg: '#1A2235',
+                        accentIndigo: '#4F46E5',
+                        accentCyan: '#06B6D4',
+                        textMain: '#F1F5F9',
+                        textMuted: '#94A3B8',
+                        danger: '#EF4444',
+                        success: '#10B981'
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 3s ease infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        }
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-deepNavy text-crispWhite min-h-screen font-sans antialiased">
+<body class="bg-primaryBg text-textMain min-h-screen font-sans antialiased flex flex-col">
     <!-- Header -->
-    <header class="p-6 border-b border-gray-800 glassmorphism sticky top-0 z-50" role="banner">
-        <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-goldHighlight" tabindex="0">VoteSmart Hub 🗳️</h1>
-            <button id="contrastToggle" class="px-4 py-2 bg-gray-800 rounded-lg focus:ring-2 focus:ring-goldHighlight" aria-label="Toggle High Contrast">
-                🌓 Contrast
-            </button>
+    <header class="p-4 md:p-6 border-b border-white/10 glass-nav sticky top-0 z-50 transition-all duration-300" role="banner">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-accentIndigo to-accentCyan flex items-center justify-center shadow-lg shadow-accentIndigo/30">
+                    <span class="text-xl">🗳️</span>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-accentCyan to-accentIndigo animate-gradient-x" tabindex="0">
+                    VoteSmart
+                </h1>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="contrastToggle" class="p-2 md:px-4 md:py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl focus:ring-2 focus:ring-accentCyan transition-all text-sm font-semibold flex items-center gap-2" aria-label="Toggle High Contrast">
+                    <span class="text-lg">🌓</span> <span class="hidden md:inline">Contrast</span>
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-8" role="main">
+    <main class="max-w-7xl mx-auto p-4 md:p-6 w-full flex-1 flex flex-col" role="main">
         
         <!-- Onboarding Modal -->
-        <dialog id="onboardingModal" class="glassmorphism p-8 rounded-xl bg-deepNavy text-crispWhite backdrop-blur-md border border-gray-700 w-full max-w-md shadow-2xl" aria-labelledby="modalTitle">
-            <h2 id="modalTitle" class="text-2xl font-bold mb-4 text-emeraldSuccess">Welcome to VoteSmart Hub</h2>
-            <form id="onboardingForm" class="flex flex-col gap-4">
-                <div>
-                    <label for="userState" class="block mb-1 text-sm font-semibold">State</label>
-                    <input type="text" id="userState" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:ring-2 focus:ring-emeraldSuccess text-white" placeholder="e.g. California" required>
+        <dialog id="onboardingModal" class="glass-card p-0 rounded-2xl bg-cardBg text-textMain backdrop-blur-xl border border-white/10 w-[95%] max-w-lg shadow-2xl overflow-hidden" aria-labelledby="modalTitle">
+            <div class="p-6 md:p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
+                <div class="text-center mb-6">
+                    <h2 id="modalTitle" class="text-2xl md:text-3xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-accentCyan to-accentIndigo">Personalize Your Hub</h2>
+                    <p class="text-textMuted text-sm">Tell us a bit about yourself so we can tailor the election information specifically for you.</p>
                 </div>
-                <div>
-                    <label for="userAge" class="block mb-1 text-sm font-semibold">Age</label>
-                    <input type="number" id="userAge" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:ring-2 focus:ring-emeraldSuccess text-white" placeholder="e.g. 25" required>
-                </div>
-                <div>
-                    <label for="userLanguage" class="block mb-1 text-sm font-semibold">Language</label>
-                    <select id="userLanguage" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:ring-2 focus:ring-emeraldSuccess text-white">
-                        <option value="English">English</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="French">French</option>
-                    </select>
-                </div>
-                <button type="submit" class="mt-4 bg-emeraldSuccess hover:bg-green-600 text-white py-2 rounded-lg font-bold transition-all focus:ring-2 focus:ring-goldHighlight">Start Electoral Journey</button>
-            </form>
+                <form id="onboardingForm" class="flex flex-col gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <!-- State -->
+                        <div>
+                            <label for="userState" class="block mb-1.5 text-sm font-semibold text-accentCyan">State / Region</label>
+                            <input type="text" id="userState" class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan text-white outline-none transition-all placeholder-gray-500" placeholder="e.g. California" required>
+                        </div>
+                        <!-- Age -->
+                        <div>
+                            <label for="userAge" class="block mb-1.5 text-sm font-semibold text-accentCyan">Age</label>
+                            <input type="number" id="userAge" class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan text-white outline-none transition-all placeholder-gray-500" placeholder="e.g. 18" min="16" max="120" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Voting Experience -->
+                    <div>
+                        <label class="block mb-1.5 text-sm font-semibold text-accentCyan">Voting Experience</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="relative flex cursor-pointer">
+                                <input type="radio" name="experience" value="First-Time" class="peer sr-only" required>
+                                <div class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 peer-checked:border-accentIndigo peer-checked:bg-accentIndigo/10 text-center text-sm font-medium transition-all">First-Time Voter</div>
+                            </label>
+                            <label class="relative flex cursor-pointer">
+                                <input type="radio" name="experience" value="Experienced" class="peer sr-only">
+                                <div class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 peer-checked:border-accentIndigo peer-checked:bg-accentIndigo/10 text-center text-sm font-medium transition-all">Experienced Voter</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Key Issue -->
+                    <div>
+                        <label for="userIssue" class="block mb-1.5 text-sm font-semibold text-accentCyan">Top Issue You Care About</label>
+                        <select id="userIssue" class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan text-white outline-none transition-all appearance-none cursor-pointer">
+                            <option value="Economy">Economy & Jobs</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Environment">Environment & Climate</option>
+                            <option value="Education">Education</option>
+                            <option value="Civil Rights">Civil Rights</option>
+                            <option value="Other">Other / Just Learning</option>
+                        </select>
+                    </div>
+
+                    <!-- Language & Accessibility -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="userLanguage" class="block mb-1.5 text-sm font-semibold text-accentCyan">Preferred Language</label>
+                            <select id="userLanguage" class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan text-white outline-none transition-all appearance-none cursor-pointer">
+                                <option value="English">English</option>
+                                <option value="Spanish">Español</option>
+                                <option value="French">Français</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="userAccessibility" class="block mb-1.5 text-sm font-semibold text-accentCyan">Accessibility Needs</label>
+                            <select id="userAccessibility" class="w-full p-3 rounded-xl bg-primaryBg border border-white/10 focus:border-accentCyan focus:ring-1 focus:ring-accentCyan text-white outline-none transition-all appearance-none cursor-pointer">
+                                <option value="None">None</option>
+                                <option value="Visual">Visual (Larger Text)</option>
+                                <option value="Audio">Audio (Auto-Read aloud)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="mt-4 w-full bg-gradient-to-r from-accentIndigo to-accentCyan hover:from-accentCyan hover:to-accentIndigo text-white py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-accentIndigo/25 transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                        Enter Your Hub
+                    </button>
+                </form>
+            </div>
         </dialog>
 
-        <!-- Left Column: Interactive Electoral Journey Map -->
-        <section class="md:col-span-1 glassmorphism p-6 rounded-xl border border-gray-800" aria-labelledby="journeyTitle">
-            <h2 id="journeyTitle" class="text-xl font-bold mb-4 text-goldHighlight">Electoral Journey Map</h2>
-            <div id="timelineContainer" class="relative border-l-2 border-gray-700 ml-3 mt-4 space-y-6" aria-live="polite">
-                <!-- Timeline items injected dynamically via JS -->
-                <p class="text-gray-400 text-sm ml-4">Engage with the AI to generate your timeline.</p>
-            </div>
-        </section>
+        <!-- Dynamic Grid Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 h-full">
+            
+            <!-- Left Column: Interactive Timeline & Actions (Hidden on mobile until generated, or stacked) -->
+            <section class="lg:col-span-4 flex flex-col gap-6 order-2 lg:order-1" aria-labelledby="journeyTitle">
+                <!-- Action Card -->
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-white/5 relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-accentIndigo/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="relative z-10">
+                        <h3 class="text-sm uppercase tracking-wider font-bold text-accentCyan mb-2">Next Major Step</h3>
+                        <div id="urgentActionContainer">
+                            <p class="text-xl font-bold text-white mb-1">Set up your profile</p>
+                            <p class="text-textMuted text-sm">Chat with the AI to discover your next step.</p>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Right Column: Chat & Quiz -->
-        <section class="md:col-span-2 flex flex-col gap-6" aria-labelledby="chatTitle">
-            <!-- Chat Window -->
-            <div class="glassmorphism p-6 rounded-xl border border-gray-800 flex flex-col h-[28rem]">
-                <h2 id="chatTitle" class="sr-only">AI Chat Interface</h2>
-                <div id="chatHistory" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-2" aria-live="assertive" role="log">
-                    <!-- Chat messages -->
+                <!-- Timeline Card -->
+                <div class="glass-card p-5 md:p-6 rounded-2xl border border-white/5 flex-1 flex flex-col min-h-[300px]">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 id="journeyTitle" class="text-xl font-bold text-white flex items-center gap-2">
+                            <span class="text-accentCyan">📍</span> Your Journey
+                        </h2>
+                        <button id="exportPlanBtn" class="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all flex items-center gap-1 font-semibold hidden">
+                            📥 Export Plan
+                        </button>
+                    </div>
+                    
+                    <div id="timelineContainer" class="relative border-l-2 border-white/10 ml-3 flex-1 overflow-y-auto custom-scrollbar pr-2" aria-live="polite">
+                        <!-- Empty State -->
+                        <div id="timelineEmptyState" class="h-full flex flex-col items-center justify-center text-center opacity-50 pt-10">
+                            <div class="text-4xl mb-3">🛣️</div>
+                            <p class="text-sm text-textMuted max-w-[200px]">Ask a question to generate your customized voting roadmap.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex gap-2 relative mt-auto">
-                    <input type="text" id="chatInput" class="flex-1 p-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-emeraldSuccess text-crispWhite placeholder-gray-400" placeholder="Ask about the election process..." aria-label="Type your message">
-                    <!-- Floating prominent microphone -->
-                    <button id="micBtn" class="p-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all focus:ring-2 focus:ring-emeraldSuccess text-xl" aria-label="Voice Input">
-                        🎤
-                    </button>
-                    <button id="sendBtn" class="px-6 py-3 bg-emeraldSuccess hover:bg-green-600 text-white rounded-lg font-bold transition-all focus:ring-2 focus:ring-goldHighlight">
-                        Send
-                    </button>
-                </div>
-            </div>
+            </section>
 
-            <!-- Gamified Knowledge Checks -->
-            <div id="quizContainer" class="glassmorphism p-6 rounded-xl border border-gray-800 hidden" aria-live="polite">
-                <h3 class="text-xl font-bold text-goldHighlight mb-4 flex items-center gap-2">⚡ Quick Quiz</h3>
-                <p id="quizQuestion" class="mb-4 text-lg font-semibold"></p>
-                <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <!-- Options injected via JS -->
+            <!-- Right Column: Chat & Quizzes -->
+            <section class="lg:col-span-8 flex flex-col gap-6 order-1 lg:order-2 h-full" aria-labelledby="chatTitle">
+                <!-- Chat Window -->
+                <div class="glass-card rounded-2xl border border-white/5 flex flex-col flex-1 relative overflow-hidden min-h-[60vh] lg:min-h-[70vh] shadow-2xl">
+                    <!-- Chat Header -->
+                    <div class="p-4 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-accentIndigo/20 flex items-center justify-center border border-accentIndigo/30">
+                                🤖
+                            </div>
+                            <div>
+                                <h2 id="chatTitle" class="font-bold text-sm md:text-base text-white">Election AI Assistant</h2>
+                                <p class="text-xs text-success flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-success animate-pulse"></span> Online & Ready</p>
+                            </div>
+                        </div>
+                        <div id="userInfoBadge" class="hidden md:flex text-xs px-3 py-1 bg-white/5 border border-white/10 rounded-full text-accentCyan font-medium">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Chat History -->
+                    <div id="chatHistory" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 custom-scrollbar scroll-smooth" aria-live="assertive" role="log">
+                        <!-- Initial Greeting injected by JS -->
+                    </div>
+
+                    <!-- Input Area -->
+                    <div class="p-4 bg-primaryBg/50 backdrop-blur-md border-t border-white/5 relative z-20">
+                        <div class="flex gap-2 items-end relative">
+                            <div class="flex-1 relative">
+                                <textarea id="chatInput" rows="1" class="w-full p-4 pr-12 rounded-2xl bg-white/5 border border-white/10 focus:border-accentIndigo focus:ring-1 focus:ring-accentIndigo text-white outline-none transition-all placeholder-gray-500 custom-scrollbar resize-none text-sm md:text-base" placeholder="Ask about registration, deadlines, or candidates..." aria-label="Type your message"></textarea>
+                                <button id="micBtn" class="absolute right-3 bottom-3 p-2 text-textMuted hover:text-accentCyan hover:bg-white/5 rounded-xl transition-all" aria-label="Voice Input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <button id="sendBtn" class="h-[56px] w-[56px] flex items-center justify-center bg-gradient-to-tr from-accentIndigo to-accentCyan hover:from-accentCyan hover:to-accentIndigo text-white rounded-2xl font-bold transition-all shadow-lg shadow-accentIndigo/20 flex-shrink-0 group">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <p id="quizFeedback" class="mt-4 font-bold hidden text-lg" role="alert"></p>
-            </div>
-        </section>
+
+                <!-- Gamified Knowledge Checks (Slides up dynamically) -->
+                <div id="quizContainer" class="glass-card p-5 md:p-6 rounded-2xl border border-white/5 hidden transform translate-y-4 opacity-0 transition-all duration-500 relative overflow-hidden" aria-live="polite">
+                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-accentCyan/10 rounded-full blur-2xl"></div>
+                    <div class="relative z-10">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                                <span class="bg-accentIndigo p-1.5 rounded-lg text-sm">⚡</span> Knowledge Check
+                            </h3>
+                            <span class="text-xs font-bold text-accentCyan bg-accentCyan/10 px-2 py-1 rounded-full">+10 Pts</span>
+                        </div>
+                        <p id="quizQuestion" class="mb-5 text-base md:text-lg text-textMain leading-relaxed font-medium"></p>
+                        <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- Options injected via JS -->
+                        </div>
+                        <div id="quizFeedback" class="mt-4 font-bold hidden text-base md:text-lg p-4 rounded-xl backdrop-blur-sm" role="alert"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script src="app.js"></script>

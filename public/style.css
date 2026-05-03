@@ -2,52 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Glassmorphism & Modern Aesthetics */
-.glassmorphism {
-    background: rgba(10, 25, 47, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+/* Custom Utilities for "Civic Modern" Theme */
+
+body {
+    -webkit-tap-highlight-color: transparent;
 }
 
-/* High Contrast Mode Toggle Classes */
+/* Elegant Glassmorphism Cards */
+.glass-card {
+    background: rgba(26, 34, 53, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+}
+
+.glass-nav {
+    background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* Custom Scrollbar for sleekness */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.2); 
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.4); 
+}
+
+/* High Contrast Mode Toggle Classes - Accessibility Feature */
 body.high-contrast {
     background-color: #000000 !important;
     color: #FFFFFF !important;
 }
 
-body.high-contrast .glassmorphism {
+body.high-contrast .glass-card,
+body.high-contrast .glass-nav {
     background: #111111 !important;
     border: 2px solid #FFFFFF !important;
+    box-shadow: none !important;
 }
 
-body.high-contrast .text-emeraldSuccess,
-body.high-contrast .text-goldHighlight {
+body.high-contrast .text-accentCyan,
+body.high-contrast .text-accentIndigo,
+body.high-contrast .from-accentCyan,
+body.high-contrast .to-accentIndigo {
     color: #FFFF00 !important;
+    background: none !important;
+    -webkit-text-fill-color: #FFFF00 !important;
 }
 
-body.high-contrast .bg-emeraldSuccess {
-    background-color: #FFFF00 !important;
+body.high-contrast .bg-gradient-to-r,
+body.high-contrast .bg-gradient-to-tr,
+body.high-contrast .bg-accentIndigo {
+    background: #FFFF00 !important;
     color: #000000 !important;
 }
 
-/* Custom Scrollbar for sleekness */
-::-webkit-scrollbar {
-    width: 6px;
-}
-::-webkit-scrollbar-track {
-    background: rgba(10, 25, 47, 0.2); 
-}
-::-webkit-scrollbar-thumb {
-    background: #374151; 
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #10B981; 
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
 }
 
-/* Dialog polyfill for older browsers */
+/* Large Text Mode */
+body.large-text {
+    font-size: 110%;
+}
+body.large-text h1 { font-size: 2.5rem; }
+body.large-text h2 { font-size: 2rem; }
+body.large-text h3 { font-size: 1.5rem; }
+body.large-text p { font-size: 1.125rem; }
+
+/* Dialog polyfill */
 dialog::backdrop {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+/* Chat animations */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chat-message-anim {
+    animation: slideUpFade 0.3s ease-out forwards;
+}
+
+/* Typing indicator */
+.typing-dot {
+    animation: typing 1.4s infinite ease-in-out both;
+}
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typing {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
 }
