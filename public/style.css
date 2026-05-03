@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Glassmorphism & Modern Aesthetics */
+.glassmorphism {
+    background: rgba(10, 25, 47, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* High Contrast Mode Toggle Classes */
+body.high-contrast {
+    background-color: #000000 !important;
+    color: #FFFFFF !important;
+}
+
+body.high-contrast .glassmorphism {
+    background: #111111 !important;
+    border: 2px solid #FFFFFF !important;
+}
+
+body.high-contrast .text-emeraldSuccess,
+body.high-contrast .text-goldHighlight {
+    color: #FFFF00 !important;
+}
+
+body.high-contrast .bg-emeraldSuccess {
+    background-color: #FFFF00 !important;
+    color: #000000 !important;
+}
+
+/* Custom Scrollbar for sleekness */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(10, 25, 47, 0.2); 
+}
+::-webkit-scrollbar-thumb {
+    background: #374151; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #10B981; 
+}
+
+/* Dialog polyfill for older browsers */
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}

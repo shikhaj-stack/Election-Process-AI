@@ -1,0 +1,35 @@
+{
+  "name": "votesmart-hub",
+  "version": "1.0.0",
+  "description": "VoteSmart Hub - Election Process Assistant",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "jest --coverage --forceExit --passWithNoTests",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^8.3.0",
+    "@google-cloud/functions-framework": "^2.0.0",
+    "@google-cloud/logging": "^9.5.3",
+    "@google-cloud/storage": "^5.20.4",
+    "@google/generative-ai": "^0.21.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
+    "helmet": "^8.0.0",
+    "xss-clean": "^0.1.4"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^9.39.4",
+    "eslint": "^9.14.0",
+    "globals": "^17.6.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.3.3",
+    "supertest": "^7.0.0"
+  }
+}

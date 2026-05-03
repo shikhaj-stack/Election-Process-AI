@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteSmart Hub 🗳️</title>
+    <meta name="description" content="VoteSmart Hub - Your interactive assistant for understanding the election process, timelines, and steps.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        deepNavy: '#0A192F',
+                        emeraldSuccess: '#10B981',
+                        crispWhite: '#F8FAFC',
+                        goldHighlight: '#F59E0B'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-deepNavy text-crispWhite min-h-screen font-sans antialiased">
+    <!-- Header -->
+    <header class="p-6 border-b border-gray-800 glassmorphism sticky top-0 z-50" role="banner">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-goldHighlight" tabindex="0">VoteSmart Hub 🗳️</h1>
+            <button id="contrastToggle" class="px-4 py-2 bg-gray-800 rounded-lg focus:ring-2 focus:ring-goldHighlight" aria-label="Toggle High Contrast">
+                🌓 Contrast
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-8" role="main">
+        
+        <!-- Onboarding Modal -->
+        <dialog id="onboardingModal" class="glassmorphism p-8 rounded-xl bg-deepNavy text-crispWhite backdrop-blur-md border border-gray-700 w-full max-w-md shadow-2xl" aria-labelledby="modalTitle">
+            <h2 id="modalTitle" class="text-2xl font-bold mb-4 text-emeraldSuccess">Welcome to VoteSmart Hub</h2>
+            <form id="onboardingForm" class="flex flex-col gap-4">
+                <div>
+                    <label for="userState" class="block mb-1 text-sm font-semibold">State</label>
+                    <input type="text" id="userState" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:ring-2 focus:ring-emeraldSuccess text-white" placeholder="e.g. California" required>
+                </div>
+                <div>
+                    <label for="userAge" class="block mb-1 text-sm font-semibold">Age</label>
+                    <input type="number" id="userAge" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:ring-2 focus:ring-emeraldSuccess text-white" placeholder="e.g. 25" required>
+                </div>
+                <div>
+                    <label for="userLanguage" class="block mb-1 text-sm font-semibold">Language</label>
+                    <select id="userLanguage" class="w-full p-2 rounded bg-gray-800 border border-gray-600 focus:ring-2 focus:ring-emeraldSuccess text-white">
+                        <option value="English">English</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="French">French</option>
+                    </select>
+                </div>
+                <button type="submit" class="mt-4 bg-emeraldSuccess hover:bg-green-600 text-white py-2 rounded-lg font-bold transition-all focus:ring-2 focus:ring-goldHighlight">Start Electoral Journey</button>
+            </form>
+        </dialog>
+
+        <!-- Left Column: Interactive Electoral Journey Map -->
+        <section class="md:col-span-1 glassmorphism p-6 rounded-xl border border-gray-800" aria-labelledby="journeyTitle">
+            <h2 id="journeyTitle" class="text-xl font-bold mb-4 text-goldHighlight">Electoral Journey Map</h2>
+            <div id="timelineContainer" class="relative border-l-2 border-gray-700 ml-3 mt-4 space-y-6" aria-live="polite">
+                <!-- Timeline items injected dynamically via JS -->
+                <p class="text-gray-400 text-sm ml-4">Engage with the AI to generate your timeline.</p>
+            </div>
+        </section>
+
+        <!-- Right Column: Chat & Quiz -->
+        <section class="md:col-span-2 flex flex-col gap-6" aria-labelledby="chatTitle">
+            <!-- Chat Window -->
+            <div class="glassmorphism p-6 rounded-xl border border-gray-800 flex flex-col h-[28rem]">
+                <h2 id="chatTitle" class="sr-only">AI Chat Interface</h2>
+                <div id="chatHistory" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-2" aria-live="assertive" role="log">
+                    <!-- Chat messages -->
+                </div>
+                <div class="flex gap-2 relative mt-auto">
+                    <input type="text" id="chatInput" class="flex-1 p-3 rounded-lg bg-gray-800 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-emeraldSuccess text-crispWhite placeholder-gray-400" placeholder="Ask about the election process..." aria-label="Type your message">
+                    <!-- Floating prominent microphone -->
+                    <button id="micBtn" class="p-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-all focus:ring-2 focus:ring-emeraldSuccess text-xl" aria-label="Voice Input">
+                        🎤
+                    </button>
+                    <button id="sendBtn" class="px-6 py-3 bg-emeraldSuccess hover:bg-green-600 text-white rounded-lg font-bold transition-all focus:ring-2 focus:ring-goldHighlight">
+                        Send
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gamified Knowledge Checks -->
+            <div id="quizContainer" class="glassmorphism p-6 rounded-xl border border-gray-800 hidden" aria-live="polite">
+                <h3 class="text-xl font-bold text-goldHighlight mb-4 flex items-center gap-2">⚡ Quick Quiz</h3>
+                <p id="quizQuestion" class="mb-4 text-lg font-semibold"></p>
+                <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Options injected via JS -->
+                </div>
+                <p id="quizFeedback" class="mt-4 font-bold hidden text-lg" role="alert"></p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
